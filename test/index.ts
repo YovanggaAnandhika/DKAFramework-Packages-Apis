@@ -12,8 +12,8 @@ import {SatuSehatConfigConstructorState} from "../src/Health/SatuSehat/Types/Sat
         state: SatuSehatConfigConstructorState.STAGING,
         credentials: {
             auth: {
-                clientId: "ngh5TnGNa25g3ADgSesZ2MNKlhGE02hGlAcwOV7LqwrsXIQt",
-                clientSecret: "6JAlC9rN49mOjWw93eQMUDKmfbAHlsW8OJgaQET0GxNXPYumvPr7cE36qohRcsFG"
+                clientId: "<token here>",
+                clientSecret: "<token here>"
             }
         }
     });
