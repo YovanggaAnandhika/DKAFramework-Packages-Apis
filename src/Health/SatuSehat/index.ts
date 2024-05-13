@@ -9,7 +9,7 @@ import {MasterPatientIndex} from "./Resources/MasterPatientIndex";
 import {FHIR} from "./FHIR";
 
 
-class SatuSehat<Config extends SatuSehatConstructorConfig> {
+class SatuSehat<Config extends SatuSehatConstructorConfig = any> {
     get HostConfig(): SatuSehatHostType | undefined {
         return this._HostConfig;
     }
