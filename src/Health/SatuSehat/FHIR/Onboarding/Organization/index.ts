@@ -121,16 +121,6 @@ export class OrganizationClasses {
             if (OrganizationClasses.hostConfig === undefined)
                 return rejected({status: false, code: 500, msg: `host config Fatal Error`});
             //###########################################################
-            query = merge({
-                identifier : [
-                    {
-                        "system": `http://sys-ids.kemkes.go.id/organization/${OrganizationClasses.finalConfig.credentials?.orgId}`,
-                    }
-                ],
-                partOf : {
-                    reference : `Organization/${OrganizationClasses.finalConfig.credentials?.orgId}`
-                }
-            }, query);
             //###########################################################
             axios<OrganizationUpdateModel>({
                 url: `${OrganizationClasses.hostConfig.resources.fhir[OrganizationClasses.finalConfig.state]}/Organization/${id}`,

@@ -24,7 +24,9 @@ import {SatuSehatConfigConstructorState} from "../src/Health/SatuSehat/Types/Sat
         .MPI()
         .Read("personal",{ identifier : 9271060312000001 })
         .then((response) => {
+
             console.log(JSON.stringify(response))
+
             })
             .catch((error) => {
                 console.error("DKA", JSON.stringify(error))
