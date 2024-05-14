@@ -5,12 +5,11 @@ import { SatuSehatFunctionClassParsing } from "../../../Interfaces/SatuSehatFunc
 import { SatuSehatCallbackProduction } from "../../../Interfaces/SatuSehatCallback.type";
 import {OrganizationCreateModel} from "./Interfaces/OrganizationCreateTypes";
 import axios from "axios";
-import {
-    SatuSehatFHIREncounterCreateRequest
-} from "../../Introperability/Encounter/Interfaces/SatuSehatFHIREncounterCreateResponse";
 import {OrganizationGetModel} from "./Interfaces/OrganizationGetTypes";
 import {merge} from "lodash";
 import {OrganizationUpdateModel} from "./Interfaces/OrganizationUpdateTypes";
+import {OrganizationCreateCallbackModel} from "./Interfaces/OrganizationCreateCallback";
+import {OrganizationGetCallbackModel} from "./Interfaces/OrganizationGetCallback";
 
 
 export class OrganizationClasses {
@@ -36,7 +35,7 @@ export class OrganizationClasses {
         OrganizationClasses.credential = options.credential;
     }
 
-    Create(query : OrganizationCreateModel) {
+    Create(query : OrganizationCreateModel): Promise<OrganizationCreateCallbackModel> {
         return new Promise((resolve, rejected) => {
             //###########################################################
             if (OrganizationClasses.hostConfig === undefined)
@@ -48,7 +47,7 @@ export class OrganizationClasses {
                 }
             }, query);
             //###########################################################
-            axios<SatuSehatFHIREncounterCreateRequest>({
+            axios<OrganizationCreateCallbackModel>({
                 url: `${OrganizationClasses.hostConfig.resources.fhir[OrganizationClasses.finalConfig.state]}/Organization`,
                 method: "POST",
                 headers: {
@@ -57,13 +56,8 @@ export class OrganizationClasses {
                     "Cache-Control" : "no-cache",
                 },
                 data: query,
-            }).then(async (response) => {
-                resolve({
-                    status: true,
-                    code: 200,
-                    msg: `Data Resources Organization Berhasil Ditembahkan`,
-                    data: response.data.data
-                })
+            }).then((response) => {
+                resolve(response.data)
 
             }).catch((error) => {
                 rejected({
@@ -73,14 +67,15 @@ export class OrganizationClasses {
         });
     }
 
-    Get(query : OrganizationGetModel) {
+    Get(query : OrganizationGetModel) : Promise<OrganizationGetCallbackModel> {
         return new Promise((resolve, rejected) => {
             //###########################################################
             if (OrganizationClasses.hostConfig === undefined) return rejected({status: false, code: 500, msg: `host config Fatal Error`});
             //###########################################################
             switch (typeof query) {
                 case "string":
-                    axios<SatuSehatFHIREncounterCreateRequest>({
+
+                    axios<OrganizationGetCallbackModel>({
                         url: `${OrganizationClasses.hostConfig.resources.fhir[OrganizationClasses.finalConfig.state]}/Organization/${query}`,
                         method: "GET",
                         headers: {
@@ -89,12 +84,7 @@ export class OrganizationClasses {
                             "Cache-Control" : "no-cache",
                         }
                     }).then(async (response) => {
-                        resolve({
-                            status: true,
-                            code: 200,
-                            msg: `Data Resources Organization Berhasil Ditampilkan`,
-                            data: response.data.data
-                        })
+                        resolve(response.data)
 
                     }).catch((error) => {
                         rejected({
@@ -103,7 +93,7 @@ export class OrganizationClasses {
                     });
                     break;
                 default :
-                    axios<SatuSehatFHIREncounterCreateRequest>({
+                    axios<OrganizationCreateCallbackModel>({
                         url: `${OrganizationClasses.hostConfig.resources.fhir[OrganizationClasses.finalConfig.state]}/Organization`,
                         method: "GET",
                         headers: {
@@ -113,12 +103,7 @@ export class OrganizationClasses {
                         },
                         params : query
                     }).then(async (response) => {
-                        resolve({
-                            status: true,
-                            code: 200,
-                            msg: `Data Resources Organization Berhasil Ditampilkan`,
-                            data: response.data.data
-                        })
+                        resolve(response.data)
                     }).catch((error) => {
                         rejected({
                             ...error
@@ -147,7 +132,7 @@ export class OrganizationClasses {
                 }
             }, query);
             //###########################################################
-            axios<SatuSehatFHIREncounterCreateRequest>({
+            axios<OrganizationUpdateModel>({
                 url: `${OrganizationClasses.hostConfig.resources.fhir[OrganizationClasses.finalConfig.state]}/Organization/${id}`,
                 method: "PUT",
                 headers: {
@@ -157,12 +142,7 @@ export class OrganizationClasses {
                 },
                 data : query,
             }).then(async (response) => {
-                resolve({
-                    status: true,
-                    code: 200,
-                    msg: `Data Resources Organization Berhasil Di Update`,
-                    data: response.data.data
-                })
+                resolve(response.data)
 
             }).catch((error) => {
                 rejected({
