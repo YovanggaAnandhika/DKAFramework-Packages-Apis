@@ -3,6 +3,9 @@ import {SatuSehatConstructorConfig} from "../../../Interfaces/SatuSehatConstruct
 import {DefaultContructorConfig} from "../../../Config";
 import {SatuSehatFunctionClassParsing} from "../../../Interfaces/SatuSehatFunctionClassParsing";
 import {SatuSehatCallbackProduction} from "../../../Interfaces/SatuSehatCallback.type";
+import {LocationCreateModel} from "./Interfaces/LocationCreateModel";
+import {LocationCreateCallbackModel} from "./Interfaces/LocationCreateCallbackModel";
+import axios from "axios";
 
 
 export class LocationClasses {
@@ -29,13 +32,30 @@ export class LocationClasses {
         LocationClasses.credential = options.credential;
     }
 
-    onCreate() {
-
-    }
-
-
-    onStart() {
-
+    Create(query : LocationCreateModel) : Promise<LocationCreateCallbackModel> {
+        return new Promise((resolve, rejected) => {
+            //###########################################################
+            if (LocationClasses.hostConfig === undefined)
+                return rejected({status: false, code: 500, msg: `host config Fatal Error`});
+            //###########################################################
+            //###########################################################
+            axios<LocationCreateCallbackModel>({
+                url: `${LocationClasses.hostConfig.resources.fhir[LocationClasses.finalConfig.state]}/Location`,
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${LocationClasses.credential.access_token}`,
+                    "Content-Type": "application/json",
+                    "Cache-Control" : "no-cache",
+                },
+                data : query,
+            }).then(async (response) => {
+                resolve(response.data)
+            }).catch((error) => {
+                rejected({
+                    ...error
+                });
+            });
+        })
     }
 
 
