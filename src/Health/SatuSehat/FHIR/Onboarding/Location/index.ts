@@ -20,6 +20,7 @@ export class LocationClasses {
      *
      * @internal
      */
+
     static finalConfig: SatuSehatConstructorConfig = DefaultContructorConfig;
 
     constructor(options: SatuSehatFunctionClassParsing) {
