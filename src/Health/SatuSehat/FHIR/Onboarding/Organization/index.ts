@@ -41,7 +41,6 @@ export class OrganizationClasses {
             if (OrganizationClasses.hostConfig === undefined)
                 return rejected({status: false, code: 500, msg: `host config Fatal Error`});
             //###########################################################
-            //###########################################################
             axios<OrganizationCreateCallbackModel>({
                 url: `${OrganizationClasses.hostConfig.resources.fhir[OrganizationClasses.finalConfig.state]}/Organization`,
                 method: "POST",
