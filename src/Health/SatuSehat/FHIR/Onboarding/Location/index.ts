@@ -28,6 +28,9 @@ export class LocationClasses {
         LocationClasses.credential = options.credential;
     }
 
+    onCreate() {
+
+    }
 
 
 
