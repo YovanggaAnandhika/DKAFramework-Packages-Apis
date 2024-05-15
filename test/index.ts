@@ -11,23 +11,29 @@ import {SatuSehatConfigConstructorState} from "../src/Health/SatuSehat/Types/Sat
     const SastuSehat = new Apis.Health.satusehat({
         state: SatuSehatConfigConstructorState.STAGING,
         credentials: {
+            orgId : "0a9751d9-9197-4ba5-8778-14b8c1925e45",
             auth: {
-                clientId: "<token here>",
-                clientSecret: "<token here>"
-            }
+                clientId: 'ngh5TnGNa25g3ADgSesZ2MNKlhGE02hGlAcwOV7LqwrsXIQt',
+                clientSecret:  '6JAlC9rN49mOjWw93eQMUDKmfbAHlsW8OJgaQET0GxNXPYumvPr7cE36qohRcsFG',
+            },
+
         }
     });
     /** Dapatkan Kode Token Dari Module **/
     const token = await SastuSehat.getAccessToken();
     SastuSehat
         .getResources(token)
-        .MPI()
-        .Read("personal",{ identifier : 9271060312000001 })
-        .then((response) => {
-            console.log(JSON.stringify(response))
-            })
-            .catch((error) => {
-                console.error("DKA", JSON.stringify(error))
-            })
-
+        .FHIR()
+        .Onboarding()
+        .Location()
+        .Read({
+            type : "custom",
+            query : {
+                organization : "0a9751d9-9197-4ba5-8778-14b8c1925e45"
+            }
+        }).then((response) => {
+            console.log(response)
+        }).catch((error) => {
+            console.error(error)
+        })
 })();

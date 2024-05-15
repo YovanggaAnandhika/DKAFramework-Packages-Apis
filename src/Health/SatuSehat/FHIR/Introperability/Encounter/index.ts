@@ -20,7 +20,6 @@ export class EncounterClassses {
     static credential : SatuSehatCallbackProduction;
 
     /**
-     *
      * @internal
      */
     static finalConfig: SatuSehatConstructorConfig = DefaultContructorConfig;

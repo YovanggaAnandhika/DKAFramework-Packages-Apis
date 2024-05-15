@@ -10,7 +10,7 @@ export interface LocationCreateModel {
     name: string;
     physicalType: LocationCreateModelPhysicalType;
     position: LocationCreateModelPosition;
-    resourceType: string;
+    resourceType: "Location";
     status: string;
     telecom: LocationCreateModelTelecom[];
 }
