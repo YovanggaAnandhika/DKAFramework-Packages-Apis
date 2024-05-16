@@ -1,6 +1,4 @@
-import Apis from "../src";
-import {SatuSehatConfigConstructorState} from "../src/Health/SatuSehat/Types/SatuSehatConfigConstructor";
-
+import Apis, { SatuSehatState } from "../dist";
 
 (async () => {
 
@@ -9,7 +7,7 @@ import {SatuSehatConfigConstructorState} from "../src/Health/SatuSehat/Types/Sat
      * Created by : Yovangga Anandhika
      */
     const SastuSehat = new Apis.Health.satusehat({
-        state: SatuSehatConfigConstructorState.STAGING,
+        state: SatuSehatState.STAGING,
         credentials: {
             orgId : "<orgId>",
             auth: {
