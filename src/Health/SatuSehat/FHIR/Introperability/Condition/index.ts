@@ -9,15 +9,16 @@ export class ConditionClasses {
 
     /**
      * @internal
+     *
      */
     static hostConfig: SatuSehatHostType | undefined;
     /**
      * @internal
+     *
      */
     static credential : SatuSehatCallbackProduction;
 
     /**
-     *
      * @internal
      */
     static finalConfig: SatuSehatConstructorConfig = DefaultContructorConfig;

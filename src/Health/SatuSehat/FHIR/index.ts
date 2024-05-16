@@ -5,6 +5,8 @@ import {DefaultContructorConfig} from "../Config";
 import {IntroperabilityClasses} from "./Introperability";
 import {OnboardingClasses} from "./Onboarding";
 import {SatuSehatCallbackProduction} from "../Interfaces/SatuSehatCallback.type";
+import {BundleOneClasses} from "./Bundle/BundleOne";
+import {BundleClasses} from "./Bundle";
 
 
 export class FHIR {
@@ -47,6 +49,11 @@ export class FHIR {
      */
     Introperability () : IntroperabilityClasses {
         return new IntroperabilityClasses({config: FHIR.finalConfig, credential: FHIR.credential, hostConfig: FHIR.hostConfig});
+    }
+
+
+    Bundle() {
+        return new BundleClasses({config: FHIR.finalConfig, credential: FHIR.credential, hostConfig: FHIR.hostConfig});
     }
 
 }

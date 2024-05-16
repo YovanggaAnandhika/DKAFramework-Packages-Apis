@@ -24,16 +24,12 @@ import {SatuSehatConfigConstructorState} from "../src/Health/SatuSehat/Types/Sat
     SastuSehat
         .getResources(token)
         .FHIR()
-        .Onboarding()
-        .Location()
-        .Read({
-            type : "custom",
-            query : {
-                organization : "0a9751d9-9197-4ba5-8778-14b8c1925e45"
-            }
-        }).then((response) => {
-            console.log(response)
-        }).catch((error) => {
-            console.error(error)
+        .Bundle()
+        .One()
+        .AddEncounter({
+            resourceType: "Encounter",
+
         })
+
+
 })();
