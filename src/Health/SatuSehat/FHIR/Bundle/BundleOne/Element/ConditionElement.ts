@@ -4,10 +4,9 @@ import {DefaultContructorConfig} from "../../../../Config";
 import {SatuSehatFunctionClassParsing} from "../../../../Interfaces/SatuSehatFunctionClassParsing";
 import {SatuSehatCallbackProduction} from "../../../../Interfaces/SatuSehatCallback.type";
 import {
-    FHIRBundleOneModelConfigCategory,
+    FHIRBundleOneModelConfigCategory, FHIRBundleOneModelConfigClinicalStatus,
     FHIRBundleOneModelConfigCode,
-    FHIRBundleOneModelConfigEncounter,
-    FHIRBundleOneModelConfigEntry, FHIRBundleOneModelConfigEntryCondition, FHIRBundleOneModelConfigEntryEncounter,
+    FHIRBundleOneModelConfigEntryCondition, FHIRBundleOneModelConfigEntryEncounter,
     FHIRBundleOneModelConfigLocation,
     FHIRBundleOneModelConfigParticipant,
     FHIRBundleOneModelConfigPeriod,
@@ -20,8 +19,13 @@ import {BundleOneClasses} from "../index";
 import moment from "moment-timezone";
 
 interface SatuSehatFunctionClassParsingBundleCondition extends SatuSehatFunctionClassParsing {
-    model : FHIRBundleOneModelConfigEntryCondition
+    model : FHIRBundleOneModelConfigEntryCondition,
+    encounter : FHIRBundleOneModelConfigEntryEncounter
 }
+
+
+
+type CheckSubject<T = FHIRBundleOneModelConfigSubject | FHIRBundleOneModelConfigEntryEncounter> = T extends FHIRBundleOneModelConfigSubject ? T : T extends FHIRBundleOneModelConfigEntryEncounter ? T : never;
 
 export class BundleOneConditionElementClasses {
 
@@ -43,17 +47,31 @@ export class BundleOneConditionElementClasses {
      */
     static finalConfig: SatuSehatConstructorConfig = DefaultContructorConfig;
 
-    private DataEncounter : FHIRBundleOneModelConfigEntryEncounter | undefined = undefined;
+    static encounter : FHIRBundleOneModelConfigEntryEncounter;
 
     constructor(options: SatuSehatFunctionClassParsingBundleCondition) {
         BundleOneConditionElementClasses.finalConfig = options.config;
         BundleOneConditionElementClasses.hostConfig = options.hostConfig;
         BundleOneConditionElementClasses.credential = options.credential;
         BundleOneConditionElementClasses.model = options.model;
+        BundleOneConditionElementClasses.encounter = options.encounter;
+
+        const namaPasien = (BundleOneConditionElementClasses.encounter.resource.subject !== undefined) ? BundleOneConditionElementClasses.encounter.resource.subject.display : "Pasien";
+        const tanggalKunjunganTerakhir = (BundleOneConditionElementClasses.encounter.resource.period?.end !== undefined) ? moment(BundleOneConditionElementClasses.encounter.resource.period?.end).format("dddd, DD MMMM YYYY") : "";
+        BundleOneConditionElementClasses.model.resource.encounter = {
+            reference : `${BundleOneConditionElementClasses.encounter.fullUrl}`,
+            display : `Kunjungan ${namaPasien} Pada ${tanggalKunjunganTerakhir}`
+        };
     }
 
-    addSubject(subject : FHIRBundleOneModelConfigSubject){
-        BundleOneConditionElementClasses.model.resource.subject = subject;
+    addSubject(subject ?: FHIRBundleOneModelConfigSubject){
+        if (subject === undefined){
+            BundleOneConditionElementClasses.model.resource.subject = BundleOneConditionElementClasses.encounter.resource.subject;
+        }else{
+            subject.reference = (typeof subject.reference === "number") ? `Patient/${subject.reference}` : subject.reference;
+            BundleOneConditionElementClasses.model.resource.subject = subject
+        }
+
         return this;
     }
 
@@ -65,21 +83,18 @@ export class BundleOneConditionElementClasses {
         return this;
     }
 
-    linkEncounter(encounter : FHIRBundleOneModelConfigEntryEncounter, rank : number){
-        const namaPasien = (encounter.resource.subject !== undefined) ? encounter.resource.subject.display : "Pasien";
-        const tanggalKunjunganTerakhir = (encounter.resource.period?.end !== undefined) ? moment(encounter.resource.period?.end).format("dddd, DD MMMM YYYY") : "";
-        BundleOneConditionElementClasses.model.resource.encounter = {
-            reference : `${encounter.fullUrl}`,
-            display : `Kunjungan ${namaPasien} Pada ${tanggalKunjunganTerakhir}`
-        };
-
-        const MatchingDiagnosis = encounter.resource.diagnosis?.find((data) => data.rank === rank);
-        if (MatchingDiagnosis !== undefined) MatchingDiagnosis.condition.reference = BundleOneConditionElementClasses.model.fullUrl;
+    addClinicalStatus(clinicalStatus : FHIRBundleOneModelConfigClinicalStatus){
+        BundleOneConditionElementClasses.model.resource.clinicalStatus = clinicalStatus;
         return this;
     }
 
     submit(){
         BundleOneClasses.EntryData.push(BundleOneConditionElementClasses.model);
+        const DiagnosaNum = BundleOneClasses.EntryData.filter((data) => data.resource.resourceType === "Condition").length;
+        if(BundleOneConditionElementClasses.encounter.resource.diagnosis?.[DiagnosaNum - 1].condition.reference !== undefined){
+            // @ts-ignore
+            BundleOneConditionElementClasses.encounter.resource.diagnosis?.[DiagnosaNum - 1].condition.reference = `${BundleOneClasses.EntryData[DiagnosaNum].fullUrl}`;
+        }
         return new BundleOneClasses({
             config: BundleOneConditionElementClasses.finalConfig,
             credential: BundleOneConditionElementClasses.credential,

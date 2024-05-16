@@ -83,7 +83,7 @@ export class BundleOneClasses {
         });
     }
 
-    AddCondition(condition ?: FHIRBundleOneModelConfigEntryCondition){
+    AddCondition(encounter : FHIRBundleOneModelConfigEntryEncounter, condition ?: FHIRBundleOneModelConfigEntryCondition){
         condition = merge({
             fullUrl : `urn:uuid:${uuidV4()}`,
             resource : {
@@ -99,7 +99,8 @@ export class BundleOneClasses {
             config: BundleOneClasses.finalConfig,
             credential: BundleOneClasses.credential,
             hostConfig: BundleOneClasses.hostConfig,
-            model : condition
+            model : condition,
+            encounter : encounter
         });
     }
 

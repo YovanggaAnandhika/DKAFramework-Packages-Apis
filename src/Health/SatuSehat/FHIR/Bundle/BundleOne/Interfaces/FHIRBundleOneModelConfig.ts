@@ -58,7 +58,7 @@ export interface FHIRBundleOneModelConfigClass {
 }
 
 export interface FHIRBundleOneModelConfigSubject {
-    reference: string
+    reference: string | number
     display: string
 }
 
@@ -78,7 +78,7 @@ export interface FHIRBundleOneModelConfigCoding {
 }
 
 export interface FHIRBundleOneModelConfigIndividual {
-    reference: string
+    reference: string | number
     display: string
 }
 
@@ -92,14 +92,14 @@ export interface FHIRBundleOneModelConfigLocation {
 }
 
 export interface FHIRBundleOneModelConfigLocation2 {
-    reference: string
+    reference: string | number
     display: string
 }
 
 export interface FHIRBundleOneModelConfigDiagnosis {
     condition: FHIRBundleOneModelConfigCondition
     use: FHIRBundleOneModelConfigUse
-    rank: number
+    rank ?: number
 }
 
 export interface FHIRBundleOneModelConfigCondition {
@@ -128,11 +128,11 @@ export interface FHIRBundleOneModelConfigPeriod2 {
 }
 
 export interface FHIRBundleOneModelConfigServiceProvider {
-    reference: string
+    reference: string | number
 }
 
 export interface FHIRBundleOneModelConfigIdentifier {
-    system: string
+    system: string | number
     value: string
 }
 
