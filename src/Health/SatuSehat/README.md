@@ -1,7 +1,12 @@
-import Apis from "../src";
-import {SatuSehatConfigConstructorState} from "../src/Health/SatuSehat/Types/SatuSehatConfigConstructor";
+# FHIR Example Code Bundle
 
 
+### CHAPTER BUNDLE 1 (Encounter, Condition)
+* Author : Yovangga Anandhika
+* corporation : PT. OXY Technology Indonesia
+
+
+```typescript
 (async () => {
 
     /***
@@ -45,3 +50,4 @@ import {SatuSehatConfigConstructorState} from "../src/Health/SatuSehat/Types/Sat
 
 
 })();
+```

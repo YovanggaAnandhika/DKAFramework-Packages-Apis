@@ -49,7 +49,7 @@ export class EncounterClassses {
                     status: true,
                     code: 200,
                     msg: `Data FHIR Encounter Berhasil Ditembahkan`,
-                    data: response.data.data
+                    data: response.data
                 })
 
             }).catch((error) => {
