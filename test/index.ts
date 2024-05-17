@@ -1,4 +1,4 @@
-import Apis, { SatuSehatState } from "../dist";
+import Apis, { SatuSehatState } from "../src";
 
 (async () => {
 
