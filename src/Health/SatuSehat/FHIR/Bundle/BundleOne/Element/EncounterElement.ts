@@ -100,10 +100,19 @@ export class BundleOneEncounterElementClasses {
     }
 
 
-    addIdentifier(identifier : FHIRBundleOneModelConfigIdentifier){
+    addIdentifier(identifier ?: FHIRBundleOneModelConfigIdentifier){
         if (BundleOneEncounterElementClasses.model.resource.identifier === undefined)
             BundleOneEncounterElementClasses.model.resource.identifier = [];
-        identifier.system = (typeof identifier.system === "number") ? `http://sys-ids.kemkes.go.id/encounter/${identifier.system}` : identifier.system;
+
+        if (identifier === undefined) {
+            identifier = {
+                system : `http://sys-ids.kemkes.go.id/encounter/${BundleOneEncounterElementClasses.finalConfig.credentials?.orgId}`,
+                value : `${BundleOneEncounterElementClasses.credential.organization_name}`
+            }
+        }
+        identifier.system = (identifier.system === undefined) ? `http://sys-ids.kemkes.go.id/encounter/${BundleOneEncounterElementClasses.finalConfig.credentials?.orgId}` : `http://sys-ids.kemkes.go.id/encounter/${identifier.system}`;
+        identifier.value = (identifier.value !== undefined) ? identifier.value : (BundleOneEncounterElementClasses.credential.organization_name !== undefined || BundleOneEncounterElementClasses.credential.organization_name !== "undefined") ? `${BundleOneEncounterElementClasses.credential.organization_name}` : BundleOneEncounterElementClasses.model.fullUrl;
+
         BundleOneEncounterElementClasses.model.resource.identifier.push(identifier);
         return this;
     }

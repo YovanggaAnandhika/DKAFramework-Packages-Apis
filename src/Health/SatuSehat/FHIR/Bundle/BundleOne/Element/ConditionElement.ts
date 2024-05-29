@@ -91,10 +91,8 @@ export class BundleOneConditionElementClasses {
     submit(){
         BundleOneClasses.EntryData.push(BundleOneConditionElementClasses.model);
         const DiagnosaNum = BundleOneClasses.EntryData.filter((data) => data.resource.resourceType === "Condition").length;
-        if(BundleOneConditionElementClasses.encounter.resource.diagnosis?.[DiagnosaNum - 1].condition.reference !== undefined){
-            // @ts-ignore
-            BundleOneConditionElementClasses.encounter.resource.diagnosis?.[DiagnosaNum - 1].condition.reference = `${BundleOneClasses.EntryData[DiagnosaNum].fullUrl}`;
-        }
+        // @ts-ignore
+        BundleOneConditionElementClasses.encounter.resource.diagnosis[DiagnosaNum - 1].condition.reference = `${BundleOneClasses.EntryData[DiagnosaNum].fullUrl}`;
         return new BundleOneClasses({
             config: BundleOneConditionElementClasses.finalConfig,
             credential: BundleOneConditionElementClasses.credential,

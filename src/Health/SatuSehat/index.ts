@@ -7,6 +7,7 @@ import {SatuSehatConfigConstructorState} from "./Types/SatuSehatConfigConstructo
 import {SatuSehatCallbackChecker, SatuSehatCallbackProduction} from "./Interfaces/SatuSehatCallback.type";
 import {MasterPatientIndex} from "./Resources/MasterPatientIndex";
 import {FHIR} from "./FHIR";
+import {BundleClasses} from "./FHIR/Bundle";
 
 
 /**
@@ -103,6 +104,7 @@ class SatuSehat<Config extends SatuSehatConstructorConfig = any> {
             }
         }
     }
+
 
 }
 

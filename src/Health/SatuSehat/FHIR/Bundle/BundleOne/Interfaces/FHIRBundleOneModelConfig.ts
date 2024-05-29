@@ -132,8 +132,8 @@ export interface FHIRBundleOneModelConfigServiceProvider {
 }
 
 export interface FHIRBundleOneModelConfigIdentifier {
-    system: string | number
-    value: string
+    system ?: string
+    value ?: string
 }
 
 export interface FHIRBundleOneModelConfigClinicalStatus {
