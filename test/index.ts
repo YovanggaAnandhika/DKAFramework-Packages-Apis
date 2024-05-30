@@ -1,4 +1,4 @@
-import Apis, { SatuSehatState } from "../dist";
+import Apis, { SatuSehatState } from "../src";
 
 (async () => {
 
@@ -25,10 +25,7 @@ import Apis, { SatuSehatState } from "../dist";
         .addSubject({ reference : 100000030009, display : "Budi Santoso" })
         .addParticipant({ individual : { reference : "Practitioner/N10000001", display : "Dokter Bronsig" }})
         .addLocation({ location : { reference : "Location/b017aa54-f1df-4ec2-9d84-8823815d7228", display : "Ruang 1A, Poliklinik Bedah Rawat Jalan Terpadu, Lantai 2, Gedung G"}})
-        .addIdentifier({
-            system : 1000004,
-            value : "P20240001"
-        })
+        .addIdentifier()
         .addDiagnosis({
             condition: { display : "Dengue haemorrhagic fever" },
             use : { coding : [{ system : "http://terminology.hl7.org/CodeSystem/diagnosis-role", code : "DD", display : "Discharge diagnosis"}]}
@@ -37,7 +34,7 @@ import Apis, { SatuSehatState } from "../dist";
             condition: { display : "Dengue haemorrhagic fever" },
             use : { coding : [{ system : "http://terminology.hl7.org/CodeSystem/diagnosis-role", code : "DD", display : "Discharge diagnosis"}]}
         })
-        .addPeriod({ start : "02:00:00 18-12-2022", end : "00:00:00 18-12-2022" })
+        .addPeriod({ start : "00:00:00 18-12-2022", end : "00:00:00 18-12-2022" })
         .submit();
 
     BundleOne
@@ -56,7 +53,7 @@ import Apis, { SatuSehatState } from "../dist";
 
 
 
-    console.log(JSON.stringify(BundleOne.merge()));
+    console.log(JSON.stringify(BundleOne.merge(), null, 4));
 
 
 })();
