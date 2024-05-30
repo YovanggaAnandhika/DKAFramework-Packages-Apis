@@ -1,6 +1,4 @@
-
-
 export enum SatuSehatConfigConstructorState {
-    STAGING,
-    PRODUCTION
+  STAGING,
+  PRODUCTION,
 }
