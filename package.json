@@ -7,6 +7,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "nodemon --watch src --watch test --exec ts-node test/index.ts",
+    "dev:cpanel": "nodemon --watch src --watch test --exec ts-node test/emailReset.ts",
     "compile": "tsc --build",
     "build": "yarn run clean && yarn run compile",
     "prepublish": "yarn run clean && yarn run compile"
