@@ -6,10 +6,17 @@ import {
     QrisCreateInvoiceCallback
 } from "./Interfaces/QrisApiConfig";
 
-
+/**
+ * @deprecated
+ * @class
+ */
 export class QRIS {
 
     private config : QrisApiConfig;
+    /**
+     * @param { axios } axios
+     * @private
+     */
     private mAxios : Axios;
 
     constructor(configQris : QrisApiConfig) {

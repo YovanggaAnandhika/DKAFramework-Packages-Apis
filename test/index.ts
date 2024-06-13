@@ -17,12 +17,20 @@ import Apis, { SatuSehatState } from "../src";
 
         }
     });
+
+    try {
+        const token = await SastuSehat.getAccessToken();
+
+    }catch (e) {
+
+    }
+
     /** Dapatkan Kode Token Dari Module **/
     let BundleOne = SastuSehat.getResources({}).FHIR().Bundle().One()
 
     const encounterData = BundleOne
         .AddEncounter()
-        .addSubject({ reference : 100000030009, display : "Budi Santoso" })
+        .addSubject({ reference : 100000030009, display : "Ryan" })
         .addParticipant({ individual : { reference : "Practitioner/N10000001", display : "Dokter Bronsig" }})
         .addLocation({ location : { reference : "Location/b017aa54-f1df-4ec2-9d84-8823815d7228", display : "Ruang 1A, Poliklinik Bedah Rawat Jalan Terpadu, Lantai 2, Gedung G"}})
         .addIdentifier()
