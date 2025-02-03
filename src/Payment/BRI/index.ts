@@ -22,13 +22,23 @@ export class BRI {
                     grant_type : "client_credentials"
                 },
                 data : {
-                    client_id : configGetToken.client_key,
-                    client_secret : configGetToken.client_secret
+                    client_id : configGetToken.costumer_key,
+                    client_secret : configGetToken.costumer_secret
                 }
             }).then(async (res) => {
-                await resolve(res)
+                return resolve({
+                    status: true,
+                    code: res.status,
+                    msg: `successfully generated access token`,
+                    data: res.data
+                })
             }).catch(async (error) => {
-                await rejected(error);
+                return rejected({
+                    status: false,
+                    code: error.status,
+                    msg: `failed to get token`,
+                    error: error
+                })
             })
         })
     }
